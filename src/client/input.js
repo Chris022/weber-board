@@ -10,18 +10,21 @@ let lastDrawing = {"points":[],"color":"red"};
 function onMouseMove(e) {
   if(button == 0){
     points.push([e.clientX, e.clientY])
-  }else if(button == 1){
+  }else if(button == 2){
     checkCollission([e.clientX, e.clientY],getCurrentState())
   }
 }
 
 function onMouseDown(e) {
+  var e = e || window.event;
   points = []
   button = e.button;
 
-  if(button == 1){
+  if(button == 2){
+    
     checkCollission([e.clientX, e.clientY],getCurrentState())
   }
+  return false;
 }
 
 function onMouseUp(e){
@@ -44,6 +47,7 @@ export function upToDate(){
 }
 
 export function startCapturingInput() {
+  window.addEventListener('contextmenu',(e)=>e.preventDefault());
   window.addEventListener('mousemove', onMouseMove);
   window.addEventListener('mousedown', onMouseDown);
   window.addEventListener('mouseup', onMouseUp);

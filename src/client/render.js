@@ -38,10 +38,12 @@ function renderShape(shape) {
     
     context.beginPath();
     context.strokeStyle = color;
+    context.fillStyle = color;
     //context.moveTo(0,0)
     if(points[0] != undefined){
       context.moveTo(points[0][0],points[0][1])
       points.forEach(point => {
+        context.fillRect(point[0],point[1],5,5)
         context.lineTo(point[0],point[1])
         context.moveTo(point[0],point[1])
       })

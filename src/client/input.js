@@ -1,30 +1,39 @@
 import { draw } from './networking';
+import { checkCollission } from './collision';
+import { getCurrentState } from './state';
 
 let points = []
-let clicked = false;
+let button = -1;
 
 let lastDrawing = {"points":[],"color":"red"};
 
 function onMouseMove(e) {
-  if(clicked){
+  if(button == 0){
     points.push([e.clientX, e.clientY])
+  }else if(button == 1){
+    checkCollission([e.clientX, e.clientY],getCurrentState())
   }
 }
 
 function onMouseDown(e) {
   points = []
-  clicked = true;
+  button = e.button;
+
+  if(button == 1){
+    checkCollission([e.clientX, e.clientY],getCurrentState())
+  }
 }
 
 function onMouseUp(e){
-  console.log(points);
-  draw({"points":points,"color":"red"});
-  lastDrawing = {"points":points,"color":"red"};
-  clicked = false;
+  if(button == 0){
+    draw({"points":points,"color":"red"});
+    lastDrawing = {"points":points,"color":"red"};
+  }
+  button = -1;
 }
 
 export function getCurrentDrawing() {
-  while(clicked == true){
+  while(button == 0){
     return {"points":points,"color":"red"};
   }
   return lastDrawing;

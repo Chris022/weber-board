@@ -4,7 +4,6 @@ class Board {
   constructor() {
     this.sockets = {};
     this.lines = [];
-    //setInterval(this.update.bind(this), 1000 / 60);
   }
 
   addUser(socket) {
@@ -22,20 +21,21 @@ class Board {
     this.lines.push(line);
     Object.keys(this.sockets).forEach(playerID => {
       const socket = this.sockets[playerID];
-      socket.emit(Constants.MSG_TYPES.BOARD_UPDATE, [line]);
+      socket.emit(Constants.MSG_TYPES.BOARD_UPDATE, {draw:[line],erase:[]});
+    });
+  }
+
+  handleErase(socket, line){
+    console.log(socket.id + " Wants to delete " + line)
+    this.lines = this.lines.filter((l) => JSON.stringify(l)!=JSON.stringify(line))
+    Object.keys(this.sockets).forEach(playerID => {
+      const socket = this.sockets[playerID];
+      socket.emit(Constants.MSG_TYPES.BOARD_UPDATE, {draw:[],erase:[line]});
     });
   }
 
   handleGetBoard(socket){
-    socket.emit(Constants.MSG_TYPES.BOARD_UPDATE,this.lines)
-  }
-
-  update() {
-    // Update each player
-    Object.keys(this.sockets).forEach(playerID => {
-      const socket = this.sockets[playerID];
-      socket.emit(Constants.MSG_TYPES.BOARD_UPDATE, this.lines);
-    });
+    socket.emit(Constants.MSG_TYPES.BOARD_UPDATE,{draw:this.lines,erase:[]})
   }
 }
 

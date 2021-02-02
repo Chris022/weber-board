@@ -26,6 +26,10 @@ export const draw = line => {
   socket.emit(Constants.MSG_TYPES.DRAW, line);
 };
 
+export const eraseLine = line => {
+  socket.emit(Constants.MSG_TYPES.ERASE, line);
+};
+
 export const play = username => {
   socket.emit(Constants.MSG_TYPES.GET_BOARD);
 };

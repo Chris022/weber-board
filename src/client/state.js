@@ -1,6 +1,6 @@
 import { getCurrentDrawing, upToDate } from './input';
 
-let board = [{"points":[[100,200],[500,600]]}];
+let board = [];
 
 
 // Handle a newly received game update.

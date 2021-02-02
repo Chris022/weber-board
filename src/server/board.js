@@ -4,7 +4,7 @@ class Board {
   constructor() {
     this.sockets = {};
     this.lines = [];
-    setInterval(this.update.bind(this), 1000 / 60);
+    //setInterval(this.update.bind(this), 1000 / 60);
   }
 
   addUser(socket) {
@@ -20,6 +20,14 @@ class Board {
   handleDraw(socket, line) {
     console.log(socket.id + " Wants to draw " + line)
     this.lines.push(line);
+    Object.keys(this.sockets).forEach(playerID => {
+      const socket = this.sockets[playerID];
+      socket.emit(Constants.MSG_TYPES.BOARD_UPDATE, [line]);
+    });
+  }
+
+  handleGetBoard(socket){
+    socket.emit(Constants.MSG_TYPES.BOARD_UPDATE,this.lines)
   }
 
   update() {

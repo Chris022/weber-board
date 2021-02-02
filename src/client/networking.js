@@ -27,5 +27,5 @@ export const draw = line => {
 };
 
 export const play = username => {
-  socket.emit(Constants.MSG_TYPES.CONNECT);
+  socket.emit(Constants.MSG_TYPES.GET_BOARD);
 };

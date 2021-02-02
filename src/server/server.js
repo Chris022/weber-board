@@ -37,6 +37,7 @@ io.on('connection', socket => {
   board.addUser(socket)
 
   socket.on(Constants.MSG_TYPES.DRAW, handleDraw);
+  socket.on(Constants.MSG_TYPES.GET_BOARD, handleGetBoard);
   //socket.on('disconnect', onDisconnect);
 });
 
@@ -44,6 +45,10 @@ io.on('connection', socket => {
 
 function handleDraw(line) {
   board.handleDraw(this, line);
+}
+
+function handleGetBoard() {
+  board.handleGetBoard(this);
 }
 
 function handeAddUser(){

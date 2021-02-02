@@ -3,6 +3,8 @@ import { draw } from './networking';
 let points = []
 let clicked = false;
 
+let lastDrawing = {"points":[],"color":"red"};
+
 function onMouseMove(e) {
   if(clicked){
     points.push([e.clientX, e.clientY])
@@ -10,18 +12,26 @@ function onMouseMove(e) {
 }
 
 function onMouseDown(e) {
+  points = []
   clicked = true;
 }
 
 function onMouseUp(e){
   console.log(points);
   draw({"points":points,"color":"red"});
+  lastDrawing = {"points":points,"color":"red"};
   clicked = false;
-  points = []
 }
 
 export function getCurrentDrawing() {
-  return {"points":points,"color":"red"};
+  while(clicked == true){
+    return {"points":points,"color":"red"};
+  }
+  return lastDrawing;
+}
+
+export function upToDate(){
+  lastDrawing = {"points":[],"color":"red"};
 }
 
 export function startCapturingInput() {

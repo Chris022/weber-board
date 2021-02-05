@@ -52,10 +52,12 @@ function handelSetPermission(permission,socketId){
 function handleCreateBoard(roomName,name) {
   let succes = boards.createNewRoom(roomName);
   let board = boards.getRoomByName(roomName);
-  if(board){
+  if(board && succes){
     this.join(roomName)
     board.addUser(io,this,name,succes)
     board.handleGetBoard(this)
+  }else{
+    this.emit(Constants.MSG_TYPES.SERVER_ERROR, "Can't create Room. Name already in Use")
   }
 }
 
@@ -64,12 +66,17 @@ function handleDraw(line) {
   if(board){
     board.handleDraw(this, line,io);
   }
+  else{
+    this.emit(Constants.MSG_TYPES.SERVER_ERROR, "Server Error")
+  }
 }
 
 function handleErase(line){
   let board = boards.getRoomById(this.id);
   if(board){
     board.handleErase(this,line,io)
+  }else{
+    this.emit(Constants.MSG_TYPES.SERVER_ERROR, "Server Error")
   }
 }
 
@@ -77,6 +84,8 @@ function handleGetBoard() {
   let board = boards.getRoomById(this.id);
   if(board){
     board.handleGetBoard(this);
+  }else{
+    this.emit(Constants.MSG_TYPES.SERVER_ERROR, "Server Error")
   }
 }
 
@@ -84,6 +93,8 @@ function onDisconnect(){
   let board = boards.getRoomById(this.id)
   if(board){
     board.removeUser(io,this);
+  }else{
+    this.emit(Constants.MSG_TYPES.SERVER_ERROR, "Server Error")
   }
 }
 
@@ -93,5 +104,7 @@ function handleAddUser(roomName,name){
     this.join(roomName) //make the socke join the room
     board.addUser(io,this,name,0)
     board.handleGetBoard(this)
+  }else{
+    this.emit(Constants.MSG_TYPES.SERVER_ERROR, "Server Error")
   }
 }

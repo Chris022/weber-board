@@ -4,6 +4,7 @@ class BoardCollection {
 
     constructor(){
         this.boards = [];
+        setInterval(this.cleanEmptyRooms.bind(this), 1000 * 60 * 5); //run every 5 minutes for emty rooms
     }
 
     createNewRoom(roomName) {
@@ -21,6 +22,16 @@ class BoardCollection {
 
     getRoomByName(name){
         return this.boards.filter(board => board.name==name)[0]
+    }
+
+    cleanEmptyRooms(){
+        console.log("Cleaning: " + this.boards)
+        this.boards.forEach(board => {
+            if(Object.keys(board.users).length == 0){
+                this.boards = this.boards.filter(b => b != board)
+            }
+            
+        })
     }
 
 

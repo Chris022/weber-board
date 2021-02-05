@@ -9,5 +9,6 @@ module.exports = Object.freeze({
     CREATE_BOARD: 'create_board',
     SET_PERMISSION: 'set_permission',
     USER_UPDATED: 'user_updated',
+    SERVER_ERROR: 'server_error'
   },
 });

@@ -1,7 +1,7 @@
 import { getCurrentState } from './state';
 
 // Get the canvas graphics context
-const canvas = document.getElementById('game-canvas');
+const canvas = document.getElementById('board-canvas');
 const context = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
@@ -38,7 +38,6 @@ function renderShape(shape) {
     
     context.beginPath();
     context.strokeStyle = color;
-    context.fillStyle = color;
     //context.moveTo(0,0)
     if(points[0] != undefined){
       context.moveTo(points[0][0],points[0][1])
@@ -54,7 +53,7 @@ function renderShape(shape) {
 }
 
 function renderUI() {
-  
+  context.fillStyle = "white";
 }
 
 function renderMainMenu() {

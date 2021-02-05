@@ -6,6 +6,25 @@
   <link rel="shortcut icon" href="/assets/icon64.png">
 </head>
 <body>
-  <canvas id="game-canvas"></canvas>
+  <canvas id="board-canvas"></canvas>
+  <button onclick="openNav();"> >> </button>
+  <div id="userpanel" class="userpanel"></div>
+  
+  <script>
+    function openNav() {
+      document.getElementById("userpanel").style.width = "250px";
+    }
+    
+    function closeNav() {
+      document.getElementById("userpanel").style.width = "0";
+    }
+    function toggleMenue(id) {
+      if(document.getElementById("dropdown-"+id).style.display == "block"){
+        document.getElementById("dropdown-"+id).style.display = "none";
+      }else{
+        document.getElementById("dropdown-"+id).style.display = "block";
+      }
+    }
+    </script>
 </body>
 </html>

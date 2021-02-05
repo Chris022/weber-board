@@ -4,7 +4,8 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const socketio = require('socket.io');
 
 const Constants = require('../shared/constants');
-const Board = require('./board');
+const BoardCollection = require('./boardCollection');
+const Helpers = require('./helpers')
 const webpackConfig = require('../../webpack.dev.js');
 
 // Setup an Express server
@@ -29,33 +30,69 @@ console.log(`Server listening on port ${port}`);
 const io = socketio(server);
 
 // Setup the Board
-const board = new Board();
+const boards = new BoardCollection();
 
 // Listen for socket.io connections
 io.on('connection', socket => {
-  console.log('Player connected!', socket.id);
-  board.addUser(socket)
-
+  socket.on(Constants.MSG_TYPES.CREATE_BOARD, handleCreateBoard)
+  socket.on(Constants.MSG_TYPES.CONNECT, handleAddUser)
   socket.on(Constants.MSG_TYPES.DRAW, handleDraw);
   socket.on(Constants.MSG_TYPES.ERASE, handleErase);
   socket.on(Constants.MSG_TYPES.GET_BOARD, handleGetBoard);
-  //socket.on('disconnect', onDisconnect);
+  socket.on(Constants.MSG_TYPES.SET_PERMISSION, handelSetPermission)
+  socket.on('disconnect', onDisconnect);
 });
 
+function handelSetPermission(permission,socketId){
+  let board = boards.getRoomById(this.id);
+  if(board){
+    board.changePermission(io,this,permission,socketId);
+  }
+}
 
+function handleCreateBoard(roomName,name) {
+  boards.createNewRoom(roomName);
+  let board = boards.getRoomByName(roomName);
+  if(board){
+    this.join(roomName)
+    board.addUser(io,this,name,1)
+    board.handleGetBoard(this)
+  }
+}
 
 function handleDraw(line) {
-  board.handleDraw(this, line);
+  let board = boards.getRoomById(this.id);
+  if(board){
+    board.handleDraw(this, line,io);
+  }
 }
+
 function handleErase(line){
-  board.handleErase(this,line)
+  let board = boards.getRoomById(this.id);
+  if(board){
+    board.handleErase(this,line,io)
+  }
 }
 
 function handleGetBoard() {
-  board.handleGetBoard(this);
+  let board = boards.getRoomById(this.id);
+  if(board){
+    board.handleGetBoard(this);
+  }
 }
 
-function handeAddUser(){
-  console.log("hasldfads")
-  board.addUser(this)
+function onDisconnect(){
+  let board = boards.getRoomById(this.id)
+  if(board){
+    board.removeUser(io,this);
+  }
+}
+
+function handleAddUser(roomName,name){
+  let board = boards.getRoomByName(roomName);
+  if(board){
+    this.join(roomName) //make the socke join the room
+    board.addUser(io,this,name,0)
+    board.handleGetBoard(this)
+  }
 }

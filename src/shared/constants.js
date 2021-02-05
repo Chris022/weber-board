@@ -5,5 +5,9 @@ module.exports = Object.freeze({
     DRAW: 'draw',
     ERASE: 'erase',
     CONNECT: 'connect_user',
+    DISSCONNECT: 'discnect_user',
+    CREATE_BOARD: 'create_board',
+    SET_PERMISSION: 'set_permission',
+    USER_UPDATED: 'user_updated',
   },
 });

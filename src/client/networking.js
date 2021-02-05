@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import { processBoardUpdate, processUserUpdate } from './state';
+import { showErrorMsg } from './htmlController'
 
 const Constants = require('../shared/constants');
 
@@ -17,6 +18,7 @@ export const connect = () => (
     // Register callbacks
     socket.on(Constants.MSG_TYPES.BOARD_UPDATE, processBoardUpdate);
     socket.on(Constants.MSG_TYPES.USER_UPDATED,processUserUpdate);
+    socket.on(Constants.MSG_TYPES.SERVER_ERROR, showErrorMsg)
     socket.on('disconnect', () => {
       console.log('Disconnected from server.');
     });

@@ -5,7 +5,6 @@ export function renderHTMLUserList(users){  //socked:id:{"name": , "permission":
   document.getElementById("userpanel").innerHTML = "";
   let allowed = users[Object.keys(users).filter(id => users[id]["name"] == getUserName())[0]]["permission"] != 0
   Object.keys(users).forEach(userId => {
-    console.log(userId)
     let element = `<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>\
     <div class="dropdown">\
       <button onclick="${allowed ? "toggleMenue('${userId}')" : ""}" class="dropbtn">${users[userId]["name"]}</button>\
@@ -18,6 +17,9 @@ export function renderHTMLUserList(users){  //socked:id:{"name": , "permission":
   Object.keys(users).forEach(userId => {
     document.getElementById("changeButton-"+userId).onclick = () => changePermission(userId,users[userId]["permission"] == 0 ? 1 : 0);
   })
-    
+}
 
+export function showErrorMsg(msg){
+  document.getElementById("error-alert").style.display = "block";
+  document.getElementById("error-msg").innerHTML = msg;
 }

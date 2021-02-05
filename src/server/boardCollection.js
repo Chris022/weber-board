@@ -10,7 +10,9 @@ class BoardCollection {
         if(!this.boards.map(x => x.name).includes(roomName)){
             console.log("Created room: " + roomName)
             this.boards.push(new Board(roomName));
+            return 1;
         }
+        return 0;
     }
 
     getRoomById(socketID){

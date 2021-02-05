@@ -51,11 +51,11 @@ function handelSetPermission(permission,socketId){
 }
 
 function handleCreateBoard(roomName,name) {
-  boards.createNewRoom(roomName);
+  let succes = boards.createNewRoom(roomName);
   let board = boards.getRoomByName(roomName);
   if(board){
     this.join(roomName)
-    board.addUser(io,this,name,1)
+    board.addUser(io,this,name,succes)
     board.handleGetBoard(this)
   }
 }

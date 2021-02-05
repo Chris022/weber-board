@@ -5,7 +5,6 @@ const socketio = require('socket.io');
 
 const Constants = require('../shared/constants');
 const BoardCollection = require('./boardCollection');
-const Helpers = require('./helpers')
 const webpackConfig = require('../../webpack.dev.js');
 
 // Setup an Express server

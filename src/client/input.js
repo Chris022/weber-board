@@ -1,6 +1,6 @@
 import { draw } from './networking';
 import { checkCollission } from './collision';
-import { getCurrentState } from './state';
+import { getCurrentState,addMiddlePosition,getMiddlePosition } from './state';
 
 let points = []
 let button = -1;
@@ -9,9 +9,11 @@ let lastDrawing = {"points":[],"color":"red"};
 
 function onMouseMove(e) {
   if(button == 0){
-    points.push([e.clientX, e.clientY])
+    points.push([e.clientX-getMiddlePosition()[0], e.clientY-getMiddlePosition()[1]])
+  }if(button == 1){
+    addMiddlePosition(e.movementX,e.movementY)
   }else if(button == 2){
-    checkCollission([e.clientX, e.clientY],getCurrentState())
+    checkCollission([e.clientX-getMiddlePosition()[0], e.clientY-getMiddlePosition()[1]],getCurrentState())
   }
 }
 
@@ -21,8 +23,7 @@ function onMouseDown(e) {
   button = e.button;
 
   if(button == 2){
-    
-    checkCollission([e.clientX, e.clientY],getCurrentState())
+    checkCollission([e.clientX-getMiddlePosition()[0], e.clientY-getMiddlePosition()[1]],getCurrentState())
   }
   return false;
 }

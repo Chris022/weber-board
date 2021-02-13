@@ -7,6 +7,8 @@ let users = {};
 
 let userName = "";
 
+let middlePostion = [0,0]
+
 export function setUserName(name){
   userName = name;
 }
@@ -33,4 +35,12 @@ export function getCurrentState() {
 
 export function deleteLine(line){
   board = board.filter((l) => JSON.stringify(l)!=JSON.stringify(line))
+}
+
+export function addMiddlePosition(x,y){
+  middlePostion = [middlePostion[0]+x,middlePostion[1]+y]
+}
+
+export function getMiddlePosition(){
+  return middlePostion;
 }

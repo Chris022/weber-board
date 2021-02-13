@@ -1,4 +1,4 @@
-import { getCurrentState } from './state';
+import { getCurrentState,getMiddlePosition } from './state';
 
 // Get the canvas graphics context
 const canvas = document.getElementById('board-canvas');
@@ -16,9 +16,12 @@ function render() {
   // Draw background
   renderBackground();
 
+  context.translate(getMiddlePosition()[0],getMiddlePosition()[1])
 
   // Draw shapes
   shapes.forEach(shape => renderShape(shape));
+
+  context.translate(-getMiddlePosition()[0],-getMiddlePosition()[1])
 
   // Draw ui
   //renderUI();

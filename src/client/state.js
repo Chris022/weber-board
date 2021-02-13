@@ -8,6 +8,7 @@ let users = {};
 let userName = "";
 
 let middlePostion = [0,0]
+let scale = 1;
 
 export function setUserName(name){
   userName = name;
@@ -43,4 +44,12 @@ export function addMiddlePosition(x,y){
 
 export function getMiddlePosition(){
   return middlePostion;
+}
+
+export function addScale(s){
+  scale += s
+}
+
+export function getScale(){
+  return scale;
 }

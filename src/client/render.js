@@ -1,8 +1,10 @@
-import { getCurrentState,getMiddlePosition } from './state';
+import { getCurrentState,getMiddlePosition,getScale } from './state';
 
 // Get the canvas graphics context
 const canvas = document.getElementById('board-canvas');
 const context = canvas.getContext('2d');
+
+let matix = context.getTransform();
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -17,12 +19,15 @@ function render() {
   renderBackground();
 
   context.translate(getMiddlePosition()[0],getMiddlePosition()[1])
+  context.scale(getScale(),getScale());
+  matix = context.getTransform();
 
   // Draw shapes
   shapes.forEach(shape => renderShape(shape));
 
   context.translate(-getMiddlePosition()[0],-getMiddlePosition()[1])
 
+  context.setTransform(1, 0, 0, 1, 0, 0);
   // Draw ui
   //renderUI();
 
@@ -75,4 +80,8 @@ export function startRendering() {
 export function stopRendering() {
   clearInterval(renderInterval);
   renderInterval = setInterval(renderMainMenu, 1000 / 60);
+}
+
+export function getInvertedTransformMatrix(){
+  return matix.invertSelf();
 }

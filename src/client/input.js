@@ -1,19 +1,27 @@
 import { draw } from './networking';
 import { checkCollission } from './collision';
-import { getCurrentState,addMiddlePosition,getMiddlePosition } from './state';
+import { getCurrentState,addMiddlePosition,getMiddlePosition,addScale,getScale } from './state';
+import {getInvertedTransformMatrix } from './render'
 
 let points = []
 let button = -1;
 
 let lastDrawing = {"points":[],"color":"red"};
 
+function getXY(x,y){
+  var imatrix = getInvertedTransformMatrix();
+  var newx = x * imatrix.a + y * imatrix.c + imatrix.e;
+  var newy = y * imatrix.b + y * imatrix.d + imatrix.f;
+  return [newx,newy]
+}
+
 function onMouseMove(e) {
   if(button == 0){
-    points.push([e.clientX-getMiddlePosition()[0], e.clientY-getMiddlePosition()[1]])
+    points.push(getXY(e.clientX,e.clientY))
   }if(button == 1){
     addMiddlePosition(e.movementX,e.movementY)
   }else if(button == 2){
-    checkCollission([e.clientX-getMiddlePosition()[0], e.clientY-getMiddlePosition()[1]],getCurrentState())
+    checkCollission(getXY(e.clientX,e.clientY),getCurrentState())
   }
 }
 
@@ -23,7 +31,7 @@ function onMouseDown(e) {
   button = e.button;
 
   if(button == 2){
-    checkCollission([e.clientX-getMiddlePosition()[0], e.clientY-getMiddlePosition()[1]],getCurrentState())
+    checkCollission([getXY(e.clientX,e.clientY)],getCurrentState())
   }
   return false;
 }
@@ -34,6 +42,10 @@ function onMouseUp(e){
     lastDrawing = {"points":points,"color":"red"};
   }
   button = -1;
+}
+
+function zoom(e){
+  addScale(e.deltaY/100);
 }
 
 export function getCurrentDrawing() {
@@ -52,10 +64,12 @@ export function startCapturingInput() {
   window.addEventListener('mousemove', onMouseMove);
   window.addEventListener('mousedown', onMouseDown);
   window.addEventListener('mouseup', onMouseUp);
+  window.addEventListener('wheel', zoom)
 }
 
 export function stopCapturingInput() {
   window.removeEventListener('mousemove', onMouseMove);
   window.removeEventListener('mousedown', onMouseDown);
   window.removeEventListener('mouseup', onMouseUp);
+  window.removeEventListener('wheel', zoom)
 }

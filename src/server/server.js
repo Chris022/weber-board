@@ -107,6 +107,6 @@ function handleAddUser(roomName,name){
     board.addUser(io,this,name,0)
     board.handleGetBoard(this)
   }else{
-    this.emit(Constants.MSG_TYPES.SERVER_ERROR, "Server Error")
+    this.emit(Constants.MSG_TYPES.SERVER_ERROR, "Server Error: Most likely the RoomName is wrong")
   }
 }

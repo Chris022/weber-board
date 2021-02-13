@@ -7,7 +7,7 @@ export function renderHTMLUserList(users){  //socked:id:{"name": , "permission":
   Object.keys(users).forEach(userId => {
     let element = `<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>\
     <div class="dropdown">\
-      <button onclick="${allowed ? "toggleMenue('${userId}')" : ""}" class="dropbtn">${users[userId]["name"]}</button>\
+      <button onclick="${allowed ?  `toggleMenue('${userId}')` : ""}" class="dropbtn">${users[userId]["name"]}</button>\
       <div id="dropdown-${userId}" class="dropdown-content">\
         <a id="changeButton-${userId}">${users[userId]["permission"] == 0 ? "Make Referee" : "Make User"}</a>\
       </div>\

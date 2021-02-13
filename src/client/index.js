@@ -8,14 +8,45 @@ import './css/bootstrap-reboot.css';
 import './css/main.css';
 
 
+window.addEventListener('DOMContentLoaded', (event) => {
+  document.getElementById("createRoomButton").onclick = ()=>{
+    var roomId = document.getElementById("roomId").value;
+    var name = document.getElementById("name").value;
+    if(roomId != "" && name != ""){
+      newRoom(name,roomId)
+      document.getElementById('myModal').style.display = "none";
+    }
+  };
+  
+  document.getElementById("joinRoomButton").onclick = ()=>{
+    var roomId = document.getElementById("roomId").value;
+    var name = document.getElementById("name").value;
+    if(roomId != "" && name != ""){
+      joinRoom(name,roomId)
+      document.getElementById('myModal').style.display = "none";
+    }
+  };
+});
 
-Promise.all([
-  connect(),
-]).then(() => {
-  var roomName = prompt("Please input the room number:");
-  var userName = prompt("Please input your user name:");
-  setUserName(userName)
-  createRoom(roomName,userName);
-  startCapturingInput();
-  startRendering();
-}).catch(console.error);
+
+function joinRoom(name,roomid){
+  Promise.all([
+    connect(),
+  ]).then(() => {
+    setUserName(name)
+    connectToRoom(roomid,name);
+    startCapturingInput();
+    startRendering();
+  }).catch(console.error);
+}
+
+function newRoom(name,roomid){
+  Promise.all([
+    connect(),
+  ]).then(() => {
+    setUserName(name)
+    createRoom(roomid,name);
+    startCapturingInput();
+    startRendering();
+  }).catch(console.error);
+}

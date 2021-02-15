@@ -1,8 +1,10 @@
-import { getCurrentState } from './state';
+import { getCurrentState,getMiddlePosition,getScale } from './state';
 
 // Get the canvas graphics context
-const canvas = document.getElementById('game-canvas');
+const canvas = document.getElementById('board-canvas');
 const context = canvas.getContext('2d');
+
+let matix = context.getTransform();
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -16,10 +18,16 @@ function render() {
   // Draw background
   renderBackground();
 
+  context.translate(getMiddlePosition()[0],getMiddlePosition()[1])
+  context.scale(getScale(),getScale());
+  matix = context.getTransform();
 
   // Draw shapes
   shapes.forEach(shape => renderShape(shape));
 
+  context.translate(-getMiddlePosition()[0],-getMiddlePosition()[1])
+
+  context.setTransform(1, 0, 0, 1, 0, 0);
   // Draw ui
   //renderUI();
 
@@ -38,7 +46,6 @@ function renderShape(shape) {
     
     context.beginPath();
     context.strokeStyle = color;
-    context.fillStyle = color;
     //context.moveTo(0,0)
     if(points[0] != undefined){
       context.moveTo(points[0][0],points[0][1])
@@ -54,7 +61,7 @@ function renderShape(shape) {
 }
 
 function renderUI() {
-  
+  context.fillStyle = "white";
 }
 
 function renderMainMenu() {
@@ -73,4 +80,8 @@ export function startRendering() {
 export function stopRendering() {
   clearInterval(renderInterval);
   renderInterval = setInterval(renderMainMenu, 1000 / 60);
+}
+
+export function getInvertedTransformMatrix(){
+  return matix.invertSelf();
 }

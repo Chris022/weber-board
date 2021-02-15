@@ -6,6 +6,47 @@
   <link rel="shortcut icon" href="/assets/icon64.png">
 </head>
 <body>
-  <canvas id="game-canvas"></canvas>
+  <!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <center>
+      <div>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="roomId">Room Id:</label><br>
+        <input type="text" id="roomId" name="roomId"><br><br>
+        <input type="submit" id="createRoomButton" value="Create Room"> <input type="submit" id="joinRoomButton" value="Join Room">
+      </div>
+    </center>
+
+  </div>
+
+</div>
+
+  <div id="error-alert" class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    <strong>Error!</strong> <a id="error-msg"></a>
+  </div>
+  <canvas id="board-canvas"></canvas>
+  <button onclick="openNav();"> >> </button>
+  <div id="userpanel" class="userpanel"></div>
+  <script>
+    function openNav() {
+      document.getElementById("userpanel").style.width = "250px";
+    }
+    
+    function closeNav() {
+      document.getElementById("userpanel").style.width = "0";
+    }
+    
+    function toggleMenue(id) {
+      if(document.getElementById("dropdown-"+id).style.display == "block"){
+        document.getElementById("dropdown-"+id).style.display = "none";
+      }else{
+        document.getElementById("dropdown-"+id).style.display = "block";
+      }
+    }
+    </script>
 </body>
 </html>

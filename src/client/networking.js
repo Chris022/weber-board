@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
-import { processBoardUpdate } from './state';
+import { processBoardUpdate, processUserUpdate } from './state';
+import { showErrorMsg } from './htmlController'
 
 const Constants = require('../shared/constants');
 
@@ -16,6 +17,8 @@ export const connect = () => (
   connectedPromise.then(() => {
     // Register callbacks
     socket.on(Constants.MSG_TYPES.BOARD_UPDATE, processBoardUpdate);
+    socket.on(Constants.MSG_TYPES.USER_UPDATED,processUserUpdate);
+    socket.on(Constants.MSG_TYPES.SERVER_ERROR, showErrorMsg)
     socket.on('disconnect', () => {
       console.log('Disconnected from server.');
     });
@@ -30,6 +33,14 @@ export const eraseLine = line => {
   socket.emit(Constants.MSG_TYPES.ERASE, line);
 };
 
-export const play = username => {
-  socket.emit(Constants.MSG_TYPES.GET_BOARD);
+export const connectToRoom = (roomname,name) => {
+  socket.emit(Constants.MSG_TYPES.CONNECT,roomname,name);
 };
+
+export const createRoom = (roomname,name) => {
+  socket.emit(Constants.MSG_TYPES.CREATE_BOARD,roomname,name);
+};
+
+export const changePermission = (sockedId, permision) => {
+  socket.emit(Constants.MSG_TYPES.SET_PERMISSION,permision,sockedId);
+}

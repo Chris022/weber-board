@@ -1,14 +1,33 @@
 import { getCurrentDrawing, upToDate } from './input';
+import { renderHTMLUserList } from './htmlController';
 
 let board = [];
 
+let users = {};
 
-// Handle a newly received game update.
+let userName = "";
+
+let middlePostion = [0,0]
+let scale = 1;
+
+export function setUserName(name){
+  userName = name;
+}
+
+export function getUserName(){
+  return userName;
+}
+
 export function processBoardUpdate(update) {
   let {draw, erase} = update;
   board = board.concat(draw);
   erase.forEach(line => deleteLine(line));
   upToDate();
+}
+
+export function processUserUpdate(newUsers) {
+  users = newUsers;
+  renderHTMLUserList(users);
 }
 
 export function getCurrentState() {
@@ -17,4 +36,20 @@ export function getCurrentState() {
 
 export function deleteLine(line){
   board = board.filter((l) => JSON.stringify(l)!=JSON.stringify(line))
+}
+
+export function addMiddlePosition(x,y){
+  middlePostion = [middlePostion[0]+x,middlePostion[1]+y]
+}
+
+export function getMiddlePosition(){
+  return middlePostion;
+}
+
+export function addScale(s){
+  scale += s
+}
+
+export function getScale(){
+  return scale;
 }

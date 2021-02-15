@@ -47,7 +47,7 @@ export function getMiddlePosition(){
 }
 
 export function addScale(s){
-  if(scale < 1){
+  if(scale > 0){
     scale += s
   }
 }

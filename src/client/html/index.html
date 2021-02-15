@@ -29,7 +29,7 @@
     <strong>Error!</strong> <a id="error-msg"></a>
   </div>
   <canvas id="board-canvas"></canvas>
-  <button onclick="openNav();"> >> </button>
+  <button class="button" onclick="openNav();"> >> </button>
   <div id="userpanel" class="userpanel"></div>
   <script>
     function openNav() {
@@ -58,8 +58,10 @@
 <footer>
   <div id="toolbar" class="toolbar">
     <center>
-      <input type="color" id="colorPicker" name="colorPicker" value="#00000">
-      <Button onclick="downloadCanvas();">Download Canvas</Button>
+      <div class="toolbardiv">
+        <input type="color" id="colorPicker" name="colorPicker" value="#00000">
+        <Button class="button" onclick="downloadCanvas();">Screenshot Canvas</Button>
+      </div>
     </center>
   </div>
 </footer>

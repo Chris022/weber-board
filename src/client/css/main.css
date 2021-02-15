@@ -13,14 +13,26 @@ hr {
   width: 100%;
 }
 
-button {
-  background-color: rgb(255, 255, 255);
-  font-size: 18px;
-  border: none;
-  color: black;
-  padding: 5px 20px;
-  border-radius: 3px;
+.button {
+  color: #000000;
+  border: 2px solid black;
+  border-radius: 2%;
+  background-color: transparent;
   position: relative;
+}
+
+.toolbardiv {
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  background-color: white; 
+  color: black; 
+  border: 2px solid antiquewhite;
+  border-radius: 3%;
 }
 button:hover {
   background-color: rgb(160, 160, 160);
@@ -52,12 +64,12 @@ button:hover {
 .toolbar {
   display: block;
   padding: 20px;
-  background-color:transparent;
   color: white;
   position: fixed;
   bottom: 0;
   width: 100%;
 }
+
 
 
 .alert {
@@ -100,6 +112,7 @@ button:hover {
 
 .userpanel .closebtn {
   color: #000000;
+  background-color: transparent;
   position: absolute;
   top: 0;
   right: 25px;
@@ -113,6 +126,7 @@ button:hover {
   color: #818181;
   display: block;
   transition: 0.3s;
+  border:none;
 }
 
 .dropbtn:hover, .dropbtn:focus {
@@ -123,6 +137,7 @@ button:hover {
 
 .dropdown {
   position: relative;
+  background-color: transparent;
   display: inline-block;
 }
 

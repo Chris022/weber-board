@@ -9,7 +9,7 @@ export function renderHTMLUserList(users){  //socked:id:{"name": , "permission":
     <div class="dropdown">\
       <button onclick="${allowed ?  `toggleMenue('${userId}')` : ""}" class="dropbtn">${users[userId]["name"]}</button>\
       <div id="dropdown-${userId}" class="dropdown-content">\
-        <a id="changeButton-${userId}">${users[userId]["permission"] == 0 ? "Make Referee" : "Make User"}</a>\
+        <a id="changeButton-${userId}">${users[userId]["permission"] == 0 ? "Make Admin" : "Make User"}</a>\
       </div>\
     </div><br>`;
     document.getElementById("userpanel").innerHTML += element;

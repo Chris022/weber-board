@@ -49,6 +49,16 @@ button:hover {
   width:max-content;
 }
 
+.toolbar {
+  display: block;
+  padding: 20px;
+  background-color:transparent;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
 
 .alert {
   display: none;

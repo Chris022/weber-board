@@ -25,5 +25,8 @@ export function showErrorMsg(msg){
 }
 
 export function getColor(){
-  
+  if(document.getElementById("colorPicker")){
+    return document.getElementById("colorPicker").value;
+  }
+  return "#00000"
 }

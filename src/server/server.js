@@ -104,7 +104,7 @@ function handleAddUser(roomName,name){
   let board = boards.getRoomByName(roomName);
   if(board){
     this.join(roomName) //make the socke join the room
-    board.addUser(io,this,name,0)
+    board.addUser(io,this,name)
     board.handleGetBoard(this)
   }else{
     this.emit(Constants.MSG_TYPES.SERVER_ERROR, "Server Error: Most likely the RoomName is wrong")

@@ -23,3 +23,7 @@ export function showErrorMsg(msg){
   document.getElementById("error-alert").style.display = "block";
   document.getElementById("error-msg").innerHTML = msg;
 }
+
+export function getColor(){
+  
+}

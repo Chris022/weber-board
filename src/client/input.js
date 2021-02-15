@@ -1,12 +1,13 @@
 import { draw } from './networking';
 import { checkCollission } from './collision';
 import { getCurrentState,addMiddlePosition,getMiddlePosition,addScale,getScale } from './state';
-import {getInvertedTransformMatrix } from './render'
+import { getInvertedTransformMatrix } from './render'
+import { getColor } from './htmlController'
 
 let points = []
 let button = -1;
 
-let lastDrawing = {"points":[],"color":"red"};
+let lastDrawing = {"points":[],"color":getColor()};
 
 function getXY(x,y){
   var imatrix = getInvertedTransformMatrix();
@@ -38,8 +39,8 @@ function onMouseDown(e) {
 
 function onMouseUp(e){
   if(button == 0){
-    draw({"points":points,"color":"red"});
-    lastDrawing = {"points":points,"color":"red"};
+    draw({"points":points,"color":getColor()});
+    lastDrawing = {"points":points,"color":getColor()};
   }
   button = -1;
 }
@@ -50,13 +51,13 @@ function zoom(e){
 
 export function getCurrentDrawing() {
   while(button == 0){
-    return {"points":points,"color":"red"};
+    return {"points":points,"color":getColor()};
   }
   return lastDrawing;
 }
 
 export function upToDate(){
-  lastDrawing = {"points":[],"color":"red"};
+  lastDrawing = {"points":[],"color":getColor()};
 }
 
 export function startCapturingInput() {

@@ -9,7 +9,7 @@ export function renderHTMLUserList(users){  //socked:id:{"name": , "permission":
     <div class="dropdown">\
       <button onclick="${allowed ?  `toggleMenue('${userId}')` : ""}" class="dropbtn">${users[userId]["name"]}</button>\
       <div id="dropdown-${userId}" class="dropdown-content">\
-        <a id="changeButton-${userId}">${users[userId]["permission"] == 0 ? "Make Referee" : "Make User"}</a>\
+        <a id="changeButton-${userId}">${users[userId]["permission"] == 0 ? "Make Admin" : "Make User"}</a>\
       </div>\
     </div><br>`;
     document.getElementById("userpanel").innerHTML += element;
@@ -22,4 +22,11 @@ export function renderHTMLUserList(users){  //socked:id:{"name": , "permission":
 export function showErrorMsg(msg){
   document.getElementById("error-alert").style.display = "block";
   document.getElementById("error-msg").innerHTML = msg;
+}
+
+export function getColor(){
+  if(document.getElementById("colorPicker")){
+    return document.getElementById("colorPicker").value;
+  }
+  return "#00000"
 }

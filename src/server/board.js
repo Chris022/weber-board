@@ -8,9 +8,12 @@ class Board {
     this.name = name;
   }
 
-  addUser(io,socket,name,permission) {
+  addUser(io,socket,name) {
     this.sockets[socket.id] = socket;
-    this.users[socket.id] = {"name":name,"permission":permission}
+    //check if there are still owensers in the chennal
+    let hasOwner = Object.values(this.users).reduce((x,y) => x || y.permission == 1,false)
+    //if not make the user owner
+    this.users[socket.id] = {"name":name,"permission":hasOwner ? 0 : 1}
     io.to(this.name).emit(Constants.MSG_TYPES.USER_UPDATED,this.users)
     console.log("Added user " + JSON.stringify(Object.values(this.users)))
   }
@@ -19,6 +22,16 @@ class Board {
     delete this.sockets[socket.id];
     delete this.users[socket.id];
     io.to(this.name).emit(Constants.MSG_TYPES.USER_UPDATED,this.users);
+    //check if there are still owensers in the chennal
+    let hasOwner = Object.values(this.users).reduce((x,y) => x || y.permission == 1,false)
+    if(!hasOwner){
+      console.log("No owner left make user rnd user to owner")
+      //make the first user to a owner
+      if(Object.keys(this.users).length > 0){
+        this.users[Object.keys(this.users)[0]].permission = 1;
+      }
+      io.to(this.name).emit(Constants.MSG_TYPES.USER_UPDATED,this.users);
+    }
     console.log("Removed User" + socket.id)
   }
 

@@ -29,7 +29,7 @@
     <strong>Error!</strong> <a id="error-msg"></a>
   </div>
   <canvas id="board-canvas"></canvas>
-  <button onclick="openNav();"> >> </button>
+  <button class="button" onclick="openNav();"> >> </button>
   <div id="userpanel" class="userpanel"></div>
   <script>
     function openNav() {
@@ -47,6 +47,22 @@
         document.getElementById("dropdown-"+id).style.display = "block";
       }
     }
+
+    function downloadCanvas(){
+      var canvas = document.getElementById("board-canvas");
+      var img    = canvas.toDataURL("image/png");
+      window.open(img,'Image','resizable=1');
+    }
     </script>
 </body>
+<footer>
+  <div id="toolbar" class="toolbar">
+    <center>
+      <div class="toolbardiv">
+        <input type="color" id="colorPicker" name="colorPicker" value="#00000">
+        <Button class="button" onclick="downloadCanvas();">Screenshot Canvas</Button>
+      </div>
+    </center>
+  </div>
+</footer>
 </html>

@@ -18,14 +18,15 @@ function render() {
   // Draw background
   renderBackground();
 
-  context.translate(getMiddlePosition()[0],getMiddlePosition()[1])
+  context.translate(getMiddlePosition()[0]+canvas.width/2,getMiddlePosition()[1]+canvas.height/2)
   context.scale(getScale(),getScale());
+  context.translate(-canvas.width/2,-canvas.height/2)
   matix = context.getTransform();
 
   // Draw shapes
   shapes.forEach(shape => renderShape(shape));
 
-  context.translate(-getMiddlePosition()[0],-getMiddlePosition()[1])
+  //context.translate(-getMiddlePosition()[0],-getMiddlePosition()[1])
 
   context.setTransform(1, 0, 0, 1, 0, 0);
   // Draw ui

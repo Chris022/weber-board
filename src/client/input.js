@@ -9,12 +9,17 @@ let button = -1;
 
 let lastDrawing = {"points":[],"color":getColor()};
 
+let matrix = {};
+
 function getXY(x,y){
-  var imatrix = getInvertedTransformMatrix();
-  var newx = x * imatrix.a + y * imatrix.c + imatrix.e;
-  var newy = y * imatrix.b + y * imatrix.d + imatrix.f;
+  var newx = x * matrix.a + y * matrix.c + matrix.e;
+  var newy = y * matrix.b + y * matrix.d + matrix.f;
   return [newx,newy]
 }
+
+let lastTouchX = 0;
+let lastTouchY = 0;
+let lastDist = 0;
 
 function onMouseMove(e) {
   if(button == 0){
@@ -27,6 +32,7 @@ function onMouseMove(e) {
 }
 
 function onMouseDown(e) {
+  matrix = getInvertedTransformMatrix();
   var e = e || window.event;
   points = []
   button = e.button;
@@ -44,6 +50,56 @@ function onMouseUp(e){
   }
   button = -1;
 }
+
+
+function onTouchMove(e) {
+  switch (button) {
+    case 0:
+      var touch = e.touches[0];
+      points.push(getXY(touch.pageX,touch.pageY));
+      break;
+    case 1: 
+      var touch = e.touches[0];
+      var touch1 = e.touches[1];
+      addMiddlePosition(touch.pageX-lastTouchX,touch.pageY-lastTouchY)
+
+      //handle zoom
+      var newDist = Math.sqrt((touch.pageX-touch1.pageX)**2 + (touch.pageY-touch1.pageY)**2)
+      addScale((newDist-lastDist)/100);
+
+
+      lastTouchX = touch.pageX;
+      lastTouchY = touch.pageY;
+      lastDist = newDist;
+      break;
+  }
+}
+
+function onTouchStart(e) {
+  matrix = getInvertedTransformMatrix();
+  switch (e.touches.length) {
+    case 1:
+      button = 0;
+      points = []
+      break;
+    case 2: 
+      button = 1;
+      lastTouchX = e.touches[0].pageX;
+      lastTouchY = e.touches[0].pageY;
+      lastDist = Math.sqrt((e.touches[0].pageX-e.touches[1].pageX)**2 + (e.touches[0].pageY-e.touches[1].pageY)**2);
+      break;
+  }
+}
+
+function onTouchEnd(e){
+  if(button = 1){
+    draw({"points":points,"color":getColor()});
+    lastDrawing = {"points":points,"color":getColor()};
+  }
+  button = -1;
+}
+
+
 
 function zoom(e){
   addScale(e.deltaY/100);
@@ -66,6 +122,11 @@ export function startCapturingInput() {
   window.addEventListener('mousedown', onMouseDown);
   window.addEventListener('mouseup', onMouseUp);
   window.addEventListener('wheel', zoom)
+
+  window.addEventListener("touchstart", onTouchStart, false);
+  window.addEventListener("touchend", onTouchEnd, false);
+  //window.addEventListener("touchcancel", handleCancel, false);
+  window.addEventListener("touchmove", onTouchMove, false);
 }
 
 export function stopCapturingInput() {

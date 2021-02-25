@@ -54,6 +54,15 @@
       var img    = canvas.toDataURL("image/png");
       window.open(img,'Image','resizable=1');
     }
+
+    function switchWriteDeleteMode(){
+      let button = document.getElementById("writeReadButton");
+      if(button.innerHTML == "Write"){
+        button.innerHTML = "Delete"
+      }else{
+        button.innerHTML = "Write"
+      }
+    }
     </script>
 </body>
 <footer>
@@ -62,6 +71,7 @@
       <div class="toolbardiv">
         <input type="color" id="colorPicker" name="colorPicker" value="#00000">
         <Button class="button" onclick="downloadCanvas();">Screenshot Canvas</Button>
+        <Button class="button" id="writeReadButton" onclick="switchWriteDeleteMode();">Write</Button>
     </div>
     </center>
   </div>

@@ -47,8 +47,16 @@ export function getMiddlePosition(){
 }
 
 export function addScale(s){
-  if(scale > 0){
-    scale += s
+  if(s > 0){
+    scale = scale/(10/9);
+  }else{
+    scale = scale*(10/9);
+  }
+}
+
+export function addScaleTouch(s){
+  if(scale + s > 0){
+    scale += s;
   }
 }
 

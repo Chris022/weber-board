@@ -1,6 +1,6 @@
 import { draw } from './networking';
 import { checkCollission } from './collision';
-import { getCurrentState,addMiddlePosition,getMiddlePosition,addScale,getScale } from './state';
+import { getCurrentState,addMiddlePosition,getMiddlePosition,addScale,getScale,addScaleTouch } from './state';
 import { getInvertedTransformMatrix } from './render'
 import { getColor } from './htmlController'
 
@@ -65,7 +65,7 @@ function onTouchMove(e) {
 
       //handle zoom
       var newDist = Math.sqrt((touch.pageX-touch1.pageX)**2 + (touch.pageY-touch1.pageY)**2)
-      addScale((newDist-lastDist)/100);
+      addScaleTouch((newDist-lastDist)/100);
 
 
       lastTouchX = touch.pageX;
@@ -102,7 +102,7 @@ function onTouchEnd(e){
 
 
 function zoom(e){
-  addScale(e.deltaY/100);
+  addScale(e.deltaY);
 }
 
 export function getCurrentDrawing() {

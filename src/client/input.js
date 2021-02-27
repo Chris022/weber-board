@@ -1,7 +1,7 @@
 import { draw } from './networking';
 import { checkCollission } from './collision';
 import { getCurrentState,addMiddlePosition,getMiddlePosition,addScale,getScale,addScaleTouch } from './state';
-import { getInvertedTransformMatrix } from './render'
+import { getInvertedTransformMatrix,getTransformMatrix } from './render'
 import { getColor } from './htmlController'
 
 let points = []
@@ -14,6 +14,15 @@ let matrix = {};
 function getXY(x,y){
   var newx = x * matrix.a + y * matrix.c + matrix.e;
   var newy = y * matrix.b + y * matrix.d + matrix.f;
+  return [newx,newy]
+}
+
+export function backToXY(point){
+  var x = point[0];
+  var y = point[1];
+  var im = getInvertedTransformMatrix();
+  var newx = x * im.a + y * im.c + im.e;
+  var newy = y * im.b + y * im.d + im.f;
   return [newx,newy]
 }
 

@@ -1,4 +1,4 @@
-import { getCurrentState,getMiddlePosition,getScale } from './state';
+import { getCurrentState,getMiddlePosition,getScale,update } from './state';
 
 // Get the canvas graphics context
 const canvas = document.getElementById('board-canvas');
@@ -10,6 +10,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 function render() {
+  update();
   const shapes = getCurrentState();
   if (!shapes) {
     return;
@@ -85,4 +86,12 @@ export function stopRendering() {
 
 export function getInvertedTransformMatrix(){
   return matix.invertSelf();
+}
+
+export function getTransformMatrix(){
+  return matix;
+}
+
+export function getBounds(){
+  return [canvas.width/2,canvas.height/2]
 }

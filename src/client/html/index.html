@@ -63,6 +63,15 @@
         button.innerHTML = "Write"
       }
     }
+
+    function switchPresentMode(){
+      let button = document.getElementById("presentationButton");
+      if(button.innerHTML == "Start Presentation Mode"){
+        button.innerHTML = "End Presentation Mode"
+      }else{
+        button.innerHTML = "Start Presentation Mode"
+      }
+    }
     </script>
 </body>
 <footer>
@@ -72,6 +81,7 @@
         <input type="color" id="colorPicker" name="colorPicker" value="#00000">
         <Button class="button" onclick="downloadCanvas();">Screenshot Canvas</Button>
         <Button class="button" id="writeReadButton" onclick="switchWriteDeleteMode();">Write</Button>
+        <Button class="button" id="presentationButton" onclick="switchPresentMode();">Start Presentation Mode</Button>
     </div>
     </center>
   </div>

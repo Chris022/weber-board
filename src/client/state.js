@@ -59,11 +59,13 @@ export function getMiddlePosition(){
 }
 
 export function update(){
-  //const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-  //if(!equals(middlePostion,endMiddlePosition)){
-  //  middlePostion[0] += (endMiddlePosition[0] - middlePostion[0]) /10;
-  //  middlePostion[1] += (endMiddlePosition[1] - middlePostion[1]) /10;
-  //}
+  if(document.getElementById("presentationButton").innerHTML == "End Presentation Mode"){
+    const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+    if(!equals(middlePostion,endMiddlePosition)){
+      middlePostion[0] += (endMiddlePosition[0] - middlePostion[0]) /10;
+      middlePostion[1] += (endMiddlePosition[1] - middlePostion[1]) /10;
+    }
+  }
 }
 
 export function addScale(s){

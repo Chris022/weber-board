@@ -46,7 +46,7 @@ function onMouseDown(e) {
   points = []
   button = e.button;
 
-  if(document.getElementById("writeReadButton").innerHTML != "Write"){
+  if(button == 0 && document.getElementById("writeReadButton").innerHTML != "Write"){
     button = 2;
   }
 

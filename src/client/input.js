@@ -59,6 +59,7 @@ function onMouseDown(e) {
 function onMouseUp(e){
   if(button == 0){
     draw({"points":points,"color":getColor()});
+    console.log({"points":points,"color":getColor()});
     lastDrawing = {"points":points,"color":getColor()};
   }
   button = -1;

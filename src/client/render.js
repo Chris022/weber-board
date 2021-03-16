@@ -4,7 +4,7 @@ import { getCurrentState,getMiddlePosition,getScale,update } from './state';
 const canvas = document.getElementById('board-canvas');
 const context = canvas.getContext('2d');
 
-let matix = context.getTransform();
+let matrix = context.getTransform();
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -22,7 +22,7 @@ function render() {
   context.translate(getMiddlePosition()[0]+canvas.width/2,getMiddlePosition()[1]+canvas.height/2)
   context.scale(getScale(),getScale());
   context.translate(-canvas.width/2,-canvas.height/2)
-  matix = context.getTransform();
+  matrix = context.getTransform();
 
   // Draw shapes
   shapes.forEach(shape => renderShape(shape));
@@ -62,34 +62,28 @@ function renderShape(shape) {
   
 }
 
-function renderUI() {
-  context.fillStyle = "white";
-}
-
 function renderMainMenu() {
   renderBackground();
 }
 
 let renderInterval = setInterval(renderMainMenu, 1000 / 60);
 
-// Replaces main menu rendering with game rendering.
 export function startRendering() {
   clearInterval(renderInterval);
   renderInterval = setInterval(render, 1000 / 60);
 }
 
-// Replaces game rendering with main menu rendering.
 export function stopRendering() {
   clearInterval(renderInterval);
   renderInterval = setInterval(renderMainMenu, 1000 / 60);
 }
 
 export function getInvertedTransformMatrix(){
-  return matix.invertSelf();
+  return matrix.invertSelf();
 }
 
 export function getTransformMatrix(){
-  return matix;
+  return matrix;
 }
 
 export function getBounds(){

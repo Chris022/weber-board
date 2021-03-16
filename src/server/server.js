@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 
 
 // Listen on port
-const port = process.env.PORT || 3000;
+const port = 3000;
 const server = app.listen(port);
 console.log(`Server listening on port ${port}`);
 
